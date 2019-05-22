@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00316CFD</color>
+    <color name="colorPrimaryDark">#0000574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#fff</color>
+    <color name="grey">#D06D6B6B</color>
+    <color name="blue">#035BF4</color>
+    <color name="lightBlue">#00BCD4</color>
+    <color name="tpb">#75442F</color>
+    <color name="limeT">#2F9C34</color>
+    <color name="TorZ">#0DA0F0</color>
+    <color name="transparent">#00AF6464</color>
+</resources>

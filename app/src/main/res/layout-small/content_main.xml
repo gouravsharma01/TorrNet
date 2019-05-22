@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EE000000"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/activity_main">
+
+        <TextView
+            android:id="@+id/textView_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="Proxy Websites."
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="#834D4C4C"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:clipChildren="true"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    android:cropToPadding="true"
+                    android:focusable="true"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/tpb" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    android:cropToPadding="true"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/limetorrents" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    android:padding="2dp"
+                    app:srcCompat="@drawable/torz" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="#834D4C4C"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/viewHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".MainActivity"
+                tools:showIn="@layout/activity_main">
+
+                <SearchView
+                    android:id="@+id/main_searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/custom_search"
+                    android:iconifiedByDefault="false"
+                    android:orientation="horizontal"
+                    android:queryHint="Search here for torrent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </SearchView>
+
+
+                <RadioGroup
+                    android:id="@+id/radioG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/main_searchView">
+
+                    <RadioButton
+                        android:id="@+id/allRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/custom_search"
+                        android:checked="true"
+                        android:padding="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="All"
+                        android:textSize="10sp"
+                        tools:layout_editor_absoluteY="108dp" />
+
+                    <RadioButton
+                        android:id="@+id/moviesRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/custom_search"
+                        android:padding="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Movies"
+                        tools:layout_editor_absoluteX="133dp"
+                        tools:layout_editor_absoluteY="108dp" />
+
+                    <RadioButton
+                        android:id="@+id/showsRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/custom_search"
+                        android:padding="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Series"
+                        tools:layout_editor_absoluteX="262dp"
+                        tools:layout_editor_absoluteY="107dp" />
+                </RadioGroup>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/searchbutton_custom"
+            android:padding="8dp"
+            android:text="Get This Torrent"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
+
+        <TextView
+            android:id="@+id/textView_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Original Websites, VPN may be  required to access"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="#834D4C4C"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:clipChildren="true"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/imageP1"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    android:cropToPadding="true"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/tpbproxy" />
+
+                <ImageView
+                    android:id="@+id/imageP2"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    android:cropToPadding="true"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/limeproxy" />
+
+                <ImageView
+                    android:id="@+id/imageP3"
+                    android:layout_width="60dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:alpha="0.5"
+                    android:background="@drawable/image_background"
+                    app:srcCompat="@drawable/torrentzp" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
