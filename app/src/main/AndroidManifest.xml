@@ -3,47 +3,51 @@
     package="com.gouravapp.TorrNet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true"/>
-
+        android:smallScreens="true" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:fullBackupContent="true"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.gouravapp.TorrNet.SplashScreen">
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
-
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gouravapp.TorrNet.Browser.BrowserActivity"
-            android:parentActivityName="com.gouravapp.TorrNet.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".Browser.BrowserActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-
         </activity>
         <activity
-            android:name="com.gouravapp.TorrNet.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
     </application>

@@ -1,9 +1,7 @@
 package com.gouravapp.TorrNet.Browser;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -15,20 +13,15 @@ import android.transition.Fade;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.gouravapp.TorrNet.MainActivity;
 import com.gouravapp.TorrNet.R;
 
 import java.util.ArrayList;
@@ -36,45 +29,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class BrowserActivity extends AppCompatActivity{
+public class BrowserActivity extends AppCompatActivity {
     private WebView webView;
     static final String TAG = "BrowserActivity";
-    static String website;
+    public static String website;
     static SwipeRefreshLayout mSwipeRefreshLayout;
     static boolean shareMode = false;
     static ProgressBar mProgressBar;
     static Menu mMenu;
+    public static String urlIntent = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_browser);
-        webView = findViewById(R.id.webView);
-        mSwipeRefreshLayout =findViewById(R.id.swipeLay);
-        setupWindowAnimations();
-        Toolbar toolbar = findViewById(R.id.toolbar1);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        webView = findViewById(R.id.webView);
+        final Intent intent = getIntent();
+        if(null != intent.getStringExtra("website")) {
+            website = intent.getStringExtra("website");
+            urlIntent = "";
+        }
+        if (website.startsWith("ThePirateBay")) {
+            toolbar.setBackgroundResource(R.color.tpb);
+        } else if (website.startsWith("Limetorrents")) {
+            toolbar.setBackgroundResource(R.color.limeT);
+        } else {
+            toolbar.setBackgroundResource(R.color.TorZ);
+        }
+        mSwipeRefreshLayout = findViewById(R.id.swipeLay);
+        //setupWindowAnimations();
         mProgressBar = findViewById(R.id.progressBar);
         Drawable draw = getResources().getDrawable(R.drawable.customprogressbar);
         mProgressBar.setProgressDrawable(draw);
-        final List<String> blockList = Arrays.asList("https://look.ufinkln.com","https://titan.infra.systems",
-                "https://www.get-express-vpn.com","https://maskip.co","https://vexacion.com","https://inronbabunling", "https://jsc.adskeeper.co.uk");
+        final List<String> blockList = Arrays.asList("https://look.ufinkln.com", "https://titan.infra.systems",
+                "https://www.get-express-vpn.com", "https://maskip.co", "https://vexacion.com", "https://inronbabunling", "https://jsc.adskeeper.co.uk");
         final List<String> blockedUrl = new ArrayList<>(blockList);
-        final Intent intent = getIntent();
-        website = intent.getStringExtra("website");
-        if(website.startsWith("ThePirateBay")){
-            toolbar.setBackgroundResource(R.color.tpb);
-        }else if(website.startsWith("Limetorrents")){
-            toolbar.setBackgroundResource(R.color.limeT);
-        }else{
-            toolbar.setBackgroundResource(R.color.TorZ);
-        }
+
         String searchTerm = intent.getStringExtra("search");
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setTitle(website);
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -172,17 +171,24 @@ public class BrowserActivity extends AppCompatActivity{
         webView.setWebViewClient(customWebViewClient);
         //webView.setWebViewClient(webViewClient);
         final WebSettings webSettings = webView.getSettings();
-        Log.i(TAG, "onCreate: "+ website);
-        if(website.equalsIgnoreCase("Torrentz(Proxy)" ) || website.equalsIgnoreCase("Torrentz")) {
-            webSettings.setJavaScriptEnabled(true);
-            webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
-            Log.i(TAG, "JavaScript Enabled");
-        }else{
-            Log.i(TAG, "JavaScript Disabled ");
-            webSettings.setJavaScriptEnabled(false);
+        Log.i(TAG, "onCreate: " + website);
+        if (website != null) {
+            if (website.equalsIgnoreCase("Torrentz(Proxy)") || website.equalsIgnoreCase("Torrentz")) {
+                webSettings.setJavaScriptEnabled(true);
+                webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
+                Log.i(TAG, "JavaScript Enabled");
+            } else {
+                Log.i(TAG, "JavaScript Disabled ");
+                webSettings.setJavaScriptEnabled(false);
+            }
         }
 
-        final String url = new UrlGenerator(website, searchTerm).createUrl();
+        String url;
+        if (!urlIntent.isEmpty()) {
+            url = urlIntent;
+        } else {
+            url = new UrlGenerator(website, searchTerm).createUrl();
+        }
         webView.loadUrl(url);
         webView.setDownloadListener(new DownloadListener() {
             @Override
@@ -211,6 +217,7 @@ public class BrowserActivity extends AppCompatActivity{
         });*/
 
     }
+
     private boolean isPackageInstalled(String packageName) {
 
         boolean found = true;
@@ -226,15 +233,7 @@ public class BrowserActivity extends AppCompatActivity{
 
         return found;
     }
-    private void setupWindowAnimations(){
-        Fade fade = new Fade();
-        fade.setDuration(1000);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setEnterTransition(fade);
-        }
-    }
     /*
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
@@ -248,7 +247,7 @@ public class BrowserActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.browser_menu, menu);
         this.mMenu = menu;
-        if(webView.getSettings().getJavaScriptEnabled()){
+        if (webView.getSettings().getJavaScriptEnabled()) {
             menu.findItem(R.id.enable_javaScript).setChecked(true);
         }
         return super.onCreateOptionsMenu(menu);
@@ -257,18 +256,18 @@ public class BrowserActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.open_browser:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(webView.getUrl()));
                 startActivity(intent);
                 break;
             case R.id.enable_javaScript:
-                if(item.isChecked()) {
+                if (item.isChecked()) {
                     webView.getSettings().setJavaScriptEnabled(false);
                     webView.reload();
                     item.setChecked(false);
-                }else {
+                } else {
                     item.setChecked(true);
                     webView.getSettings().setJavaScriptEnabled(true);
                     webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
@@ -276,11 +275,11 @@ public class BrowserActivity extends AppCompatActivity{
                 }
                 break;
             case R.id.sharemode:
-                if(!shareMode) {
+                if (!shareMode) {
                     Toast.makeText(this, "Share Mode Enabled", Toast.LENGTH_SHORT).show();
                     shareMode = true;
                     item.setIcon(getResources().getDrawable(R.drawable.ic_action_share));
-                }else{
+                } else {
                     Toast.makeText(this, "Share Mode Disabled", Toast.LENGTH_SHORT).show();
                     shareMode = false;
                     item.setIcon(getResources().getDrawable(R.drawable.ic_action_sharedis));
@@ -290,7 +289,7 @@ public class BrowserActivity extends AppCompatActivity{
                 break;
 
             case R.id.sharelink:
-                String sharelink  = webView.getUrl();
+                String sharelink = webView.getUrl();
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
                 intent1.setType("text/plain");
                 intent1.putExtra(Intent.EXTRA_TEXT, sharelink);
@@ -303,9 +302,9 @@ public class BrowserActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(webView.canGoBack()){
+        if (webView.canGoBack()) {
             webView.goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
 

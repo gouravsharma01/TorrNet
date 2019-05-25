@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">TorrNet</string>
     <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string-array name="Sites">
+        <item>ThePirateBay</item>
+        <item>Limetorrents</item>
+        <item>Torrentz</item>
+    </string-array>
 </resources>

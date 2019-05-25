@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Menu;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +31,10 @@ import com.gouravapp.TorrNet.Browser.BrowserActivity;
 
 import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener , CustomDialog.DialogListener {
+import static com.gouravapp.TorrNet.SettingActivity.IMAGEVIEW;
+import static com.gouravapp.TorrNet.SettingActivity.WEBSITE;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener , CustomDialog.DialogListener{
     private static final String TAG = "MainActivity";
     private ImageView tpbIV, limeIv, tozIV, tpbPIV, limePIV, tozPIV;
     private SearchView mSearchView;
@@ -39,7 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean buttonTapped = false;
     private String  seasonNo = "";
     private String  episodeNo = "";
+    private NavigationView navigationView;
     boolean language = false;
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout drawerLayout;
+    public static String MY_PREF = "myPreference";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +58,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        website = "ThePirateBay";
+        drawerLayout= findViewById(R.id.drawable);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        website = getSharedPreferences(MY_PREF,MODE_PRIVATE).getString(WEBSITE, "ThePirateBay");
+        Log.i(TAG, "preference website " + website);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new BaseActivity(getApplicationContext(), drawerLayout));
+        navigationView.setCheckedItem(R.id.torrnet);
         tpbIV = findViewById(R.id.imageView1);
         limeIv = findViewById(R.id.imageView2);
         tozIV = findViewById(R.id.imageView3);
         tpbPIV = findViewById(R.id.imageP1);
         limePIV = findViewById(R.id.imageP2);
         tozPIV = findViewById(R.id.imageP3);
-        selectedIv = tpbIV;
+        int ivId = getSharedPreferences(MY_PREF,MODE_PRIVATE).getInt(IMAGEVIEW, 0);
+        if(ivId != 0){
+            selectedIv = findViewById(ivId);
+        }else{
+            selectedIv = tpbIV;
+        }
+
         RadioGroup radioGroup = findViewById(R.id.radioG);
         radioGroup.setOnCheckedChangeListener(this);
-        tpbIV.setAlpha(1f);
+        selectedIv.setAlpha(1f);
         tpbIV.setOnClickListener(this); tpbPIV.setOnClickListener(this);
         limeIv.setOnClickListener(this); limePIV.setOnClickListener(this);
         tozIV.setOnClickListener(this); tozPIV.setOnClickListener(this);
@@ -141,23 +164,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    protected void onPause() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 500);
-        super.onPause();
-
-
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -175,22 +187,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         seasonNo= "";
         episodeNo = "";
-        language = false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        selectedIv.setAlpha(0.5f);
+        website = getSharedPreferences(MY_PREF,MODE_PRIVATE).getString(WEBSITE, "ThePirateBay");
+        navigationView.setCheckedItem(R.id.torrnet);
+        int ivId = getSharedPreferences(MY_PREF,MODE_PRIVATE).getInt(IMAGEVIEW, 0);
+        if(ivId != 0){
+            selectedIv = findViewById(ivId);
+        }else{
+            selectedIv = tpbIV;
         }
-
-        return super.onOptionsItemSelected(item);
+        selectedIv.setAlpha(1f);
+        language = false;
     }
     public static void hideKeyboard(Activity activity , View view_1){
         InputMethodManager inputMethodManager  = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -238,8 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openDialog(int layoutId){
-        com.gouravapp.TorrNet.CustomDialog customDialog = new com.gouravapp.TorrNet.CustomDialog(this,layoutId);
-        customDialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        CustomDialog customDialog = new CustomDialog(this,layoutId);
         //customDialog.getWindow().setLayout((6*width)/7,(4*height)/5 );
         customDialog.show();
     }
@@ -270,4 +276,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             radioButton.setChecked(true);
         }
     }
+/*
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.settings:
+                startActivity(new Intent(this, SettingActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                break;
+            case R.id.shareAction:
+
+                break;
+            case R.id.contact:
+
+                break;
+            case R.id.torrnet:
+                Log.i(TAG, "onNavigationItemSelected: " + getApplicationContext());
+                startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }*/
+
 }

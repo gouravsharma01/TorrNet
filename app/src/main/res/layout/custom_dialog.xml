@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent" android:layout_width="match_parent">
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/dialogCard"
-        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="230dp"
         app:cardBackgroundColor="#F3252525"
         app:cardCornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center">
+
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="167dp"
             android:layout_marginEnd="25dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="3">
 
@@ -31,7 +41,7 @@
                 android:padding="8dp"
                 android:text="Enter Season No."
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -53,7 +63,7 @@
                 android:padding="8dp"
                 android:text="Hindi Language"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -62,8 +72,10 @@
             android:layout_width="wrap_content"
             android:layout_height="167dp"
             android:layout_gravity="end"
+            android:layout_weight="1"
             android:layout_marginStart="25dp"
             android:orientation="vertical"
+            android:layout_marginLeft="15dp"
             android:weightSum="3">
 
             <EditText
@@ -71,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:inputType="number"
                 android:textStyle="italic"
                 android:textAlignment="center"
@@ -90,7 +102,7 @@
                 android:layout_margin="5dp"
                 android:textColor="@color/white"
                 android:hint="Episode No."
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="italic"
                 android:textColorHint="@color/grey"
                 android:inputType="number"
@@ -102,11 +114,14 @@
                 android:id="@+id/language_drop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1">
 
             </Switch>
+        </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -142,4 +157,4 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

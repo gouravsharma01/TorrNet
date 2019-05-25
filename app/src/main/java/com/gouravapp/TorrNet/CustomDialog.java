@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -23,10 +24,8 @@ public class CustomDialog extends Dialog implements View.OnClickListener, Compou
     private int layoutId;
     private boolean language = false;
     private Activity mActivity;
-    private Button okButton, cancelButton;
-    EditText season , episode;
-    Switch lang;
-    DialogListener mDialogListener;
+    private EditText season , episode;
+    private DialogListener mDialogListener;
     static boolean cancelbol = false;
 
     public CustomDialog(Activity activity, int layoutId){
@@ -39,18 +38,19 @@ public class CustomDialog extends Dialog implements View.OnClickListener, Compou
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);/*
+        requestWindowFeature(Window.FEATURE_NO_TITLE);*/
         setContentView(layoutId);
-        okButton = findViewById(R.id.ok_button);
-        cancelButton = findViewById(R.id.cancel_button);
+        getWindow().setBackgroundDrawableResource(R.color.transparent);
+        Button okButton = findViewById(R.id.ok_button);
+        Button cancelButton = findViewById(R.id.cancel_button);
         okButton.setOnClickListener(this); cancelButton.setOnClickListener(this);
         setCancelable(false);
         season = findViewById(R.id.season_ET);
         episode = findViewById(R.id.episode_ET);
-        lang = findViewById(R.id.language_drop);
+        Switch lang = findViewById(R.id.language_drop);
         lang.setOnCheckedChangeListener(this);
-
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
     }
 
