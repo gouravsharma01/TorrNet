@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/torrnet"
+            android:icon="@drawable/icon"
+            android:title="TorrNet" />
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+
+
+    </group>
+
+    <item android:title="Open Sites">
+        <menu>
+            <item
+                android:id="@+id/tpb"
+                android:icon="@drawable/ic_web"
+                android:title="ThePirateBay" />
+            <item
+                android:id="@+id/limetor"
+                android:icon="@drawable/ic_web"
+                android:title="LimeTorrents" />
+
+            <item
+                android:id="@+id/torrenz"
+                android:icon="@drawable/ic_web"
+                android:title="Torrentz" />
+        </menu>
+    </item>
+
+    <item android:title="Communication">
+        <menu>
+            <item
+                android:id="@+id/shareAction"
+                android:icon="@drawable/ic_action_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/torrentClient"
+                android:icon="@drawable/ic_file_download"
+                android:title="Download Torrent Client" />
+
+            <item
+                android:id="@+id/contact"
+                android:icon="@drawable/ic_send_black_24dp"
+                android:title="Contact Developer" />
+        </menu>
+    </item>
+
+
+</menu>
