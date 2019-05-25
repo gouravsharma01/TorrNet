@@ -23,7 +23,8 @@ to Proxy sites.
   ### Malicious url are blocked for safety.
   
   
-  
+# Download 
+   ### Download this app by clicking on this [Link](https://github.com/gouravsharma01/TorrNet/releases/).
   
   
   
